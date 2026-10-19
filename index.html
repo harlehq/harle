@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>"ALIDOR HOME PAGE"</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!--This is CSS-->
+<!-- Combined CSS: Original styles + Dropdown styles -->
+<style>
+/*This is the Navigation Bar section*/
+.navbar 
+{margin-top: 10px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+background-color: #fff;
+border: 2px solid #000;
+padding: 15px 20px;
+color: #000;
+font-family: Arial, sans-serif;
+position: relative;
+z-index: 1001;}
+
+        .nav-links 
+        {display: flex;
+        gap: 14px;
+        list-style: none; /* Added for ul */
+        margin: 0;
+        padding: 0;}
+
+        .nav-links a 
+        {color: #000;
+        text-decoration: none;
+        font-size: 20px;
+        text-transform: uppercase;}
+
+        .nav-links a:hover 
+        {color: #666;}
+
+.logo-container 
+{/*font-size: 34px; does not work here, bt only in the logo link, so this can be deleted*/
+color: black;
+font-weight: bold;
+flex-shrink: 0; /* prevents logo from shrinking */
+position: absolute;
+left: 50%;
+transform: translateX(-50%); /* Add this line to center properly */}
+
+        .logo-link 
+        {color: #000;
+        font-size: 36px; /*update all; */
+        font-weight: bold;
+        text-decoration: none;
+        font-style: italic;}
+
+        .logo-link:hover 
+        {color: #666;}
+
+.right-icons 
+{display: flex;
+gap: 15px;
+color: #000;
+text-align: center;
+align-items: center;
+justify-content: flex-end;}
+
+    .right-icons a:hover 
+    {color: #666;}
+
+    .right-icons a 
+        {display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 24px; /* Matches your icon sizes */
+        width: 24px;  /* Optional: Ensures consistent width, but helps if icons vary */
+        text-decoration: none;} /* Already have this elsewhere, but reinforce */
+
+    .star-icon
+    {margin-left: 5px;}
+            
+    .star-icon.filled
+    {color: black; /* filled in shade for filled star */}
+
+    .shopping_bag-icon /*This is not for styling. This is the parent. */
+    {cursor: pointer;
+    position: relative;} /* Required for badge positioning */
+
+    .shopping_bag-icon svg /*SVGs need this child selector because the base class is on the parent, and SVGs ignore some parent styles (like color) unless inherited or targeted directly*/
+    {width: 24px;
+    height: 24px;}
+
+     .search-icon, .star-icon, .shopping_bag-icon, .login
+    {font-size: 24px;
+    color: #000;
+    text-decoration: none;}
+    .search-icon:hover, .star-icon:hover, .shopping_bag-icon:hover, .login
+    {color: #666;}
+.login
+{margin-left: 20px;
+margin-right: 20px;
+cursor: pointer;
+font-size: 20px;
+font-family: Arial, sans-serif;
+color: black;
+text-transform: uppercase;} 
+
+.search-wrapper 
+{position: relative;
+width: 300px; /* Fixed width, or adjust as needed */
+height: 40px;
+display: flex;
+align-items: center;
+background: white;
+border-radius: 0; /* Rectangular, no rounded corners */
+border: 1px solid #ccc;
+overflow: hidden;}
+
+        .search-input 
+        {width: 100%;
+        padding: 0 10px 0 40px; /* Space for icon on left */
+        border: none;
+        outline: none;
+        font-size: 16px;
+        background: transparent;}
+
+        .search-icon 
+        {position: absolute;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 24px;
+        height: 24px;
+        pointer-events: none; /* So it doesn't interfere with input */}
+
+        .search-icon svg 
+        {fill: #666;}
+        
+                .suggestions
+                {position: absolute;
+                top: 100%;
+                left: 0;
+                background: white;
+                border: 1px solid #ccc;
+                width: 100%;
+                max-height: 200px;
+                overflow-y: auto;
+                z-index: 1000;
+                display: none;}
+
+                .suggestions ul /* ul:  defines the type of list (unordered)*/
+                {list-style: none;
+                padding: 0;
+                margin: 0;}
+
+                .suggestions li /* li: defines the indivual items within that list*/
+                {padding: 10px;
+                cursor: pointer;}
+
+                .suggestions li:hover
+                {background: #f0f0f0;}
+
+
+
+.wrapper 
+{flex: 1;
+display: flex;
+flex-direction: row;
+position: relative;
+height: 100%;}
+
+
+/* Updated login form styles */
+.login-form 
+    {display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px 0;
+position: relative;}
+
+.inputs-row 
+    {display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;}
+
+.input-group 
+   {position: relative;
+    display: flex;
+    flex-direction: column;
+    text-align: right;}
+
+.input-group label 
+    {position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    font-size: 14px;
+    color: #000;
+    margin-bottom: 0px;
+    font-weight: bold;
+    pointer-events: none;
+    transition: 0.3s ease;}
+
+.input-group input:focus + label,
+.input-group input:not(:placeholder-shown) + label {
+  top: -8px; /* Float above on focus or when filled */
+  right: 8px;
+  font-size: 12px; /* Smaller when floated */
+  color: #000; /* Darker when active */
+  background: white; /* Background to cover border */
+  padding: 0 4px; /* Padding for clean look */
+}
+.input-group input {
+  padding: 12px 10px 12px 10px; /* Extra padding for label space */
+  border: 1px solid #ccc;
+  border-radius: 0;
+  font-size: 16px;
+  text-align: right;
+  width: 100%;
+  box-sizing: border-box;
+  background: transparent; /* Transparent for label overlay */
+}
+.input-group input:focus {
+  outline: none;
+  border-color: #000; /* Focus border */
+}
+.login-button {
+  padding: 10px;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 10px;
+  text-align: right;
+  width: 100%;
+}
+
+.login-button:hover {
+    background-color: #333;
+}
+
+/* Mobile: Stack inputs vertically */
+@media (max-width: 768px) {
+    .inputs-row {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .input-group {
+    text-align: left; /* Left-align on mobile */
+  }
+  .input-group label {
+    right: auto;
+    left: 10px; /* Left-align labels on mobile */
+  }
+  .input-group input {
+    text-align: left;
+  }
+  .input-group input:focus + label,
+  .input-group input:not(:placeholder-shown) + label {
+    left: 8px;
+    right: auto;
+  }
+}
+
+/*this is the first main image container on the homepage*/
+.image-container-1 
+{margin-top: 10px;
+margin-left: 0px;
+margin-right: 0px;
+margin-bottom: 100px;
+height: 4400px; /* these dimensions are too big, you need to play around and make it smaller*/
+width: 3009px; 
+box-sizing: border-box;
+display: grid;
+position: relative; /* Added to establish a stacking context */
+z-index: 1;/* Ensure it's below the iframe */
+overflow: visible;}
+
+        .image-1
+        {width: 100%;/* ensures iframe isn't clipped?!*/
+        height: 36.7%;
+        object-fit: cover;
+        display: block;
+        z-index: 2;
+        border: 2px solid black;}
+
+
+/*this is the first main video container on the homepage
+.video-container-1 
+{margin-top: 10px;
+margin-left: 0px;
+margin-right: 0px;
+margin-bottom: 100px;
+height: 4400px; /* these dimensions are too big, you need to play around and make it smaller*/
+/*width: 3009px; 
+box-sizing: border-box;
+display: grid;
+position: relative; /* Added to establish a stacking context */
+/*z-index: 1;/* Ensure it's below the iframe */
+/*overflow: visible;}*/
+
+        /*.video-1
+        {width: 100%;/* ensures iframe isn't clipped?!
+        height: 36.7%;
+        object-fit: cover;
+        display: block;
+        z-index: 2;
+        border: 2px solid black;}*/
+        
+/* shared styles for all windows image containers directly beneathe img cont 1*/
+.windows-image-container 
+{border: 2px solid white;
+background-color: white;
+position: absolute;
+overflow: hidden;
+
+font-family: Arial, sans-serif;
+box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+margin-top: 1900px; /* 1900px-if you change this then the windows image containers sit on top of the main image container */
+z-index: 3;}
+
+        .windows-image-container-1 
+        {width: 700px;
+        height: 800px;
+        top: 150px;
+        left: calc(50% - 1000px);}
+
+        .windows-image-container-2 
+        {width: 700px;
+        height: 800px;
+        top: 150px;
+        right: calc(50% - 1000px);}
+
+                /*windows image container title*/
+                .title-bar 
+                {background: linear-gradient(to right, #000080, #1084d0);
+                color: white;
+                padding: 2px 2px 2px 5px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                user-select: none;}
+
+                .title 
+                {font-weight: bold;
+                font-size: 12px;}
+
+
+                /*windows image container button*/
+                .buttons
+                 {display: flex;}
+
+                .btn 
+                {width: 16px;
+                height: 14px;
+                background-color: #c0c0c0;
+                border-top: 1px solid #ffffff;
+                border-left: 1px solid #ffffff;
+                border-bottom: 1px solid #808080;
+                border-right: 1px solid #808080;
+                margin: 0;
+                display: flex;  /* Keep for centering if needed, but no content now */
+                justify-content: center;
+                align-items: center;
+                cursor: pointer;
+                position: relative;  /* Added for absolute positioning of pseudo-elements */
+                font-size: 0;  /* Hide any accidental text */}
+
+                /* Sunken effect on active/click */
+                .btn:active 
+                {border-top: 1px solid #808080;
+                border-left: 1px solid #808080;
+                border-bottom: 1px solid #ffffff;
+                border-right: 1px solid #ffffff;
+                background-color: #c0c0c0;  /* Keep same, or adjust for pressed look */}
+
+                /* Minimize: Horizontal line at bottom */
+                .minimize-btn::before 
+                {content: '';
+                position: absolute;
+                bottom: 1px;  /*  Position at bottom like Windows 95 */
+                left: 50%;
+                transform: translateX(-50%);
+                width: 8px;  /* Line width */
+                height: 2px;  /* Line thickness; change it to 1 if you want */
+                background-color: #000;  /* Black line */}
+
+                /* Maximize: Square with thick top border */
+                .maximize-btn::before 
+                {content: '';
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 8px;
+                height: 8px;
+                border: 1px solid #000;  /* Thin borders */
+                border-top: 2px solid #000;  /* Thicker top for Windows 95 style */}
+
+
+                /* Close: Bold X using lines (avoids font issues) */
+                .close-btn::before,
+                .close-btn::after 
+                {content: '';
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 10px;  /* X size */
+                height: 2px;  /* Thickness */
+                background-color: #000;}
+
+                .close-btn::before 
+                {transform: translate(-50%, -50%) rotate(45deg);}
+
+                .close-btn::after
+                {transform: translate(-50%, -50%) rotate(-45deg);}
+
+                .windows-image-content 
+                {padding: 10px;  
+                text-align: center;
+                color: black;
+                height: calc(100% - 25px);
+                display: flex;
+                flex-direction: column;
+                justify-content: center;}
+
+                .windows-image-content img 
+                {max-width: 100%;
+                height: auto;
+                margin-bottom: 5px;}
+
+                .minimized .windows-image-content 
+                {display: none;}
+
+                .minimized 
+                {height: auto !important;}
+
+                .enlarged 
+                {width: 900px !important;
+                height: 1000px !important;
+                z-index: 1000;}
+
+                .enlarged .windows-image-content 
+                {height: calc(100% - 25px);
+                padding: 10px;
+                justify-content: center;
+                overflow: auto;}
+
+                .enlarged .windows-image-content img 
+                {max-width: 100%;
+                max-height: 80%;}
+
+body
+{position: relative;
+padding-bottom: 0px; /* Adjust this value as needed—e.g., 500px for moderate extra extra scroll, or 2000px to go way down. Use vh units like 100vh for screen-height-based padding if preferred. */}
+
+/* Dropdown CSS Integration */
+.nav-item 
+{position: relative;}/* For absolute positioning of dropdown */
+        
+        .nav-link 
+        {cursor: pointer;} /* Added to match dropdown behavior */
+        
+        .dropdown 
+        {display: none; /* Hidden by default */
+        position: absolute;
+        top: 100%;
+        left: -24%; /* Adjust to center under link; tweak based on width */
+        width: 300px; /* Narrower width for vertical column feel */
+        background-color: #fff;
+        color: #000;
+        border: 1px solid #ccc;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        z-index: 1000;
+        border-radius: 10px; /* 10px Rounded corners for bubble effect, 0px for 90 degree angle */
+        padding: 20px;
+        margin-top: 0;} /* Changed to 0 to remove gap for seamless hover */
+        
+/* Show on hover */
+.nav-item:hover > .dropdown {
+display: block;
+        }
+.dropdown::before {
+content: '';
+position: absolute;
+top: -10px; /* Arrow height */
+left: 50%; /* Center the arrow */
+transform: translateX(-50%); /* Precise centering */
+border-left: 10px solid transparent;
+border-right: 10px solid transparent;
+border-bottom: 10px solid #fff; /* Arrow pointing up, matching background */
+        }
+.dropdown-content {
+display: flex;
+flex-direction: column; /* Stack everything vertically */
+        }
+.category-list, .sub-list {
+list-style: none;
+padding: 0;
+margin-bottom: 20px; /* Space between sections */
+        }
+.category-list li, .sub-list li {
+margin-bottom: 10px;
+        }
+.category-list a, .sub-list a {
+color: #000;
+text-decoration: none;
+display: block; /* Make sub-links stack vertically */
+        }
+.product-images {
+display: flex;
+flex-direction: column; /* Stack images vertically */
+gap: 10px;
+        }
+.product-images img {
+width: 100%;
+height: auto;
+        }
+/* Responsive: Stack on mobile */
+@media (max-width: 768px) {
+.nav-links {
+flex-direction: column;
+            }
+.dropdown {
+position: static;
+width: 100%;
+left: 0;
+            }
+.dropdown::before {
+display: none; /* Hide arrow on mobile if needed */
+            }
+        }
+
+
+
+        .product 
+        {border: 1px solid #ccc;
+            padding: 10px;
+            margin: 10px;
+            display: inline-block;}
+
+/*this is the first main image container on the homepage*/
+.image-container-2 
+{margin-top: 1000px;
+margin-left: 0px;
+margin-right: 0px;
+margin-bottom: 2000px; /*if you choose to delete the second image directly beneath it, you want to change this to 100px;*/
+/*height: 1500px; /* these dimensions are too big, you need to play around and make it smaller*/
+/*width: 3009px;*/
+box-sizing: border-box;
+/*border-width: 2px;
+border-style: solid;
+border-color: black;*/
+display: grid;
+position: relative; /* Added to establish a stacking context */
+z-index: 1;/* Ensure it's below the iframe */
+overflow: visible;}
+
+        .image-2
+        {width: 100%;/* ensures iframe isn't clipped?!*/
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        z-index: 2;}
+
+footer 
+{position: static; /* Keeps it at the bottom of the viewport */
+bottom: 0;
+width: 100%;}
+
+        .copyright_text
+        {font-size: 20px;
+        font-family: Arial, sans-serif;
+        cursor: pointer;
+        align-items: center;
+        text-align: center;
+        padding-bottom: 10px;}
+</style>
+</head>
+
+
+<body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--this is html-->
+<!--this is the LEATHER category list-->
+<nav class="navbar">
+<ul class="nav-links"> <!-- Changed to ul for list structure -->
+<li class="nav-item">
+<a href="ag.html" class="nav-link">AG</a>
+<div class="dropdown">
+<div class="dropdown-content">
+<!-- Categories (stacked vertically) -->
+ <!--when you click the category list that is how you should be able to view all the products in that section -->
+<ul class="category-list">
+<li><a href="rings.html">Rings</a></li>
+</ul>
+</div>
+</div>
+</li>
+
+
+
+<!--this is the EXPLORE category list
+<li class="nav-item">
+<a href="explore.html" class="nav-link">EXPLORE</a>
+Add dropdown structure here if needed
+<div class="dropdown">
+<div class="dropdown-content">
+ Example content; customize as needed 
+<ul class="category-list">
+<li style="margin-bottom: 25px;"><a href="shop_all.html">SHOP ALL</a></li>
+<li><a href="new_arrivals.html">NEW ARRIVALS</a></li>
+</ul>
+</div>-->
+
+
+
+</div>
+</li>
+</ul>
+
+
+
+<div class="logo-container">
+<a href="https://francescaloren.com" class="logo-link"><b><i> MAISON LOREN</i></b></a>
+</div> 
+
+<!-- This nav bar right icons-->
+<div class="right-icons">
+<form action="/search" method="get">
+    <div class="search-wrapper">
+      <input type="search" class="search-input" name="q" placeholder="Search for a product..." />
+    <div class="search-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+          <path d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+          <path d="M0 0h24v24H0V0z" fill="none"/>
+      </svg>
+      </div>
+    <div class="suggestions">
+      <ul></ul>
+      </div>
+  </div>
+  </form>
+
+    <!--This is the nav bar right icon links including the star-icon, the shopping_bag-icon, and the the shopping badge which identifies how much many items are located intside of the shopping bag-->
+    <a href="starred_page.html" class="star-icon"> ☆ </a> <!-- star icon; when you end up starring an item the star shluld get filled in ★ -->
+    <!--this is the correct hyperlink for the shopping bag icon not <a href="checkout_page.html" class="shopping_bag-icon"><img src="images/shopping_bag.svg" alt= "shopping_bag" width="24" height="24"></a> -->
+    <a href="shopping_bag.html" class="shopping_bag-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-bag" viewBox="0 0 16 16">
+        <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1z"/>
+        </svg>
+        <span class="shopping_bag-badge" id="shopping_bag-badge"></span>
+    </a>
+  
+
+    </div>
+    </nav>
+
+
+
+
+<!--main img container 1-->
+<div id="main" class="main"></div>
+<div class="image-container-1">
+<img class="image-1" src="images/image-1.jpg">
+</div>
+</div>
+
+
+
+
+<!--if you want a videothis is the first main video container on the homepage -->
+<!--<div class="video-container-1">
+<video class="video-1" src="images/video1.MP4" controls></video>
+</div>-->
+<!-- windows image container 1 -->
+<div class="windows-image-container windows-image-container-1" id="WindowsimgContainer1">
+<div class="title-bar" id="titleBar1">
+  <span class="title">"DROP 01"</span>
+  <div class="buttons">
+    <button class="btn minimize-btn" id="minBtn1" onclick="toggleMinimize('WindowsimgContainer1')"></button>  <!-- Empty, symbol via CSS -->
+    <button class="btn maximize-btn" id="maxBtn1" onclick="toggleEnlarge('WindowsimgContainer1', 'maxBtn1')"></button>
+    <button class="btn close-btn" id="closeBtn1" onclick="closeWindow('WindowsimgContainer1')"></button>
+  </div>
+</div>
+<div class="windows-image-content">
+<img src="" />
+<!--<p>if you want to add text inside the container, but not the title you do it here-->
+<!--<p> you can stack different <p> like this for more lines of text-->
+</div>
+</div>
+<!-- Windows Image Container 2 -->
+<div class="windows-image-container windows-image-container-2" id="WindowsimgContainer2">
+<div class="title-bar" id="titleBar2">
+  <span class="title">"DROP 01"</span>
+  <div class="buttons">
+    <button class="btn minimize-btn" id="minBtn2" onclick="toggleMinimize('WindowsimgContainer2')"></button>  <!-- Empty, symbol via CSS -->
+    <button class="btn maximize-btn" id="maxBtn2" onclick="toggleEnlarge('WindowsimgContainer2', 'maxBtn2')"></button>
+    <button class="btn close-btn" id="closeBtn2" onclick="closeWindow('WindowsimgContainer2')"></button>
+  </div>
+</div>
+<div class="windows-image-content">
+<img src=""/>
+<!--<p>if you want to add text inside the container, but not the title you do it here-->
+<!--<p> you can stack different <p> like this for more lines of text-->
+</div> <!-- Closing of .windows-image-content -->
+</div> <!-- Closing of .windows-image-container-2 -->
+<!-- Combined JavaScript: Original script (dropdown JS removed) -->
+
+<!--main img container 2-->
+<div class="image-container-2">
+<img class="image-2" src=""> <!--the img class should = lipstick-img but for now for dimesions it won't -->
+</div>
+
+<footer>
+<div class="copyright_text" id="copyright_text">2026 FRANCESCA LOREN </div>
+</footer>
+</body>
+
+
+
+<!--this is the javascript this adds the interactivity-->
+<script>
+'use strict'; /*this helps for better debugging*/
+document.documentElement.lang = navigator.language || navigator.userLanguage || 'en';
+// Object to track state for each container
+const containerStates = {
+WindowsimgContainer1: { isMinimized: false, isEnlarged: false, originalWidth: '', originalHeight: '' },
+WindowsimgContainer2: { isMinimized: false, isEnlarged: false, originalWidth: '', originalHeight: '' }
+        };
+function toggleMinimize(containerId) {
+const container = document.getElementById(containerId);
+const state = containerStates[containerId];
+if (state.isMinimized) {
+container.classList.remove('minimized');
+state.isMinimized = false;
+            } else {
+container.classList.add('minimized');
+state.isMinimized = true;
+            }
+        }
+function toggleEnlarge(containerId, maxBtnId) {
+const container = document.getElementById(containerId);
+const maxBtn = document.getElementById(maxBtnId);
+const state = containerStates[containerId];
+if (state.isEnlarged) {
+container.style.width = state.originalWidth;
+container.style.height = state.originalHeight;
+container.classList.remove('enlarged');
+maxBtn.innerText = '□';
+state.isEnlarged = false;
+            } else {
+state.originalWidth = container.style.width || getComputedStyle(container).width;
+state.originalHeight = container.style.height || getComputedStyle(container).height;
+container.classList.add('enlarged');
+maxBtn.innerText = '🗗';
+state.isEnlarged = true;
+            }
+        }
+function closeWindow(containerId) {
+document.getElementById(containerId).style.display = 'none'; // Fixed typo from 'containerID' to 'containerId'
+        }
+// Search auto-suggest functionality
+const searchInput = document.querySelector('.search-input');
+const suggestions = document.querySelector('.suggestions ul');
+const searchForm = document.querySelector('.right-icons form');
+const searchwrapper = document.querySelector('.search-wrapper');
+const products = [
+'ring',
+'rings',
+'01 arle ring',
+'arle ring',
+'arle',
+'01',
+// Add more products as needed
+];
+searchInput.addEventListener('input', () => {
+const value = searchInput.value.trim().toLowerCase();
+suggestions.innerHTML = '';
+if (value) {
+const filtered = products.filter(product => product.toLowerCase().includes(value));
+filtered.forEach(product => {
+const li = document.createElement('li');
+li.textContent = product;
+li.addEventListener('click', () => {
+searchInput.value = product;
+suggestions.parentElement.style.display = 'none';
+searchForm.submit(); // Optionally submit on click
+            });
+suggestions.appendChild(li);
+        });
+suggestions.parentElement.style.display = filtered.length ? 'block' : 'none';
+    } else {
+suggestions.parentElement.style.display = 'none';
+    }
+});
+// Hide suggestions on outside click
+const searchWrapper = document.querySelector('.search-wrapper');
+document.addEventListener('click', (event) => {
+if (!searchWrapper.contains(event.target)) {
+suggestions.parentElement.style.display = 'none';
+    }
+});
+// Shopping bag icon fill and badge functionality
+function updateShoppingBagIcon() {
+const cart = JSON.parse(localStorage.getItem('shoppingBagItems')) || [];
+const bagIcon = document.querySelector('.shopping_bag-icon');
+const badge = document.getElementById('shopping_bag-badge');
+if (bagIcon) {
+if (cart.length > 0) {
+bagIcon.classList.add('filled');
+        } else {
+bagIcon.classList.remove('filled');
+        }
+    }
+if (badge) {
+badge.textContent = cart.length;
+badge.style.display = cart.length > 0 ? 'block' : 'none';
+    }
+}
+/*Menu bar section*/
+function toggleMenu() {
+    var sidebar = document.getElementById("mySidebar");
+    var main = document.getElementById("main");
+    var currentWidth = parseFloat(getComputedStyle(sidebar).width);  // Gets actual pixel width
+    if (currentWidth > 0) {
+        closeMenu();
+    } else {
+        openMenu();
+    }
+}
+
+function openMenu() {
+document.getElementById("mySidebar").style.width = "11%";
+document.getElementById("mySidebar").style.border = "1px solid black";
+document.getElementById("main").style.marginLeft = "250px";
+}
+function closeMenu() {
+document.getElementById("mySidebar").style.width = "0";
+document.getElementById("mySidebar").style.border = "none";
+document.getElementById("main").style.marginLeft = "0";
+}
+
+// Sidebar Accordion Functionality
+document.addEventListener('DOMContentLoaded', function() {
+    // Define sections: { headingId, contentId }
+    const sections = [
+        { heading: 'company-heading', content: 'company-content' },
+        { heading: 'boutiques-heading', content: 'boutiques-content' },
+        { heading: 'connect-heading', content: 'connect-content' },
+        { heading: 'services-heading', content: 'services-content' },
+        { heading: 'shop-heading', content: 'shop-content' },
+        { heading: 'account-heading', content: 'account-content' }
+        
+        // Add 'alidor-heading' if you want it toggleable: { heading: 'alidor-heading', content: 'alidor-content' }
+    ];
+
+    sections.forEach(section => {
+        const heading = document.getElementById(section.heading);
+        const content = document.getElementById(section.content);
+        const icon = heading.querySelector('.toggle-icon');
+
+        if (heading && content && icon) {
+            heading.addEventListener('click', function() {
+                const isVisible = content.style.display === 'block';
+                if (isVisible) {
+                    content.style.display = 'none';
+                    icon.textContent = '+';
+                    icon.classList.remove('rotated');
+                } else {
+                    content.style.display = 'block';
+                    icon.textContent = '✝'; // Cross when expanded (use Unicode or replace with SVG)
+                    icon.classList.add('rotated');
+                }
+            });
+        }
+    });
+});
+
+// Check login status on page load
+window.addEventListener('load', function() {
+  if (localStorage.getItem('loggedIn') === 'true') {
+    // User is logged in; update UI accordingly (e.g., show welcome message)
+    const username = localStorage.getItem('username');
+    // Example: document.getElementById('welcome').textContent = `Welcome, ${username}!`;
+    // Also, perhaps hide login link and show logout button
+  } else {
+    // Not logged in; redirect back to login or show login prompt
+    // window.location.href = 'login.html'; // Uncomment if you want to force login
+  }
+});
+
+// Optional: Logout functionality
+// Add a logout button that runs: localStorage.removeItem('loggedIn'); localStorage.removeItem('username'); window.location.href = 'login.html';
+</script>
+</html>
+
+
+<!--notes-->
+<!--Need to update JS for main page; when you add something to the bag it does not yet update on the main page but it updates on other pages which is good-->
+<!--Mobile Responsiveness: If the sidebar looks off on small screens, add a media query in CSS (e.g., @media (max-width: 768px) { .sidebar { width: 80% !important; } } for full-width on mobile).-->
