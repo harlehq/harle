@@ -6,6 +6,59 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
+#password-gate {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.password-box {
+  text-align: center;
+  border: 2px solid #000;
+  padding: 40px;
+  font-family: Arial, sans-serif;
+}
+
+.password-box h2 {
+  margin-top: 0;
+  text-transform: uppercase;
+}
+
+.password-box input {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #000;
+  margin: 10px 0;
+  width: 200px;
+}
+
+.password-box button {
+  padding: 10px 20px;
+  background: #000;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+
+.password-box button:hover {
+  background: #333;
+}
+
+#error-msg {
+  color: red;
+  font-size: 14px;
+  height: 20px;
+}
+
+
 /*This is the Navigation Bar section*/
 .navbar 
 {margin-top: 10px;
@@ -613,6 +666,15 @@ padding-bottom: 10px;}
 </head>
 <body>
 
+<div id="password-gate" style="display:none;">
+  <div class="password-box">
+    <h2>Enter Password</h2>
+    <input type="password" id="pw-input" placeholder="Password">
+    <button onclick="checkPassword()">Enter</button>
+    <p id="error-msg"></p>
+  </div>
+</div>
+
 <nav class="navbar">
 <ul class="nav-links">
 <li class="nav-item">
@@ -716,6 +778,21 @@ padding-bottom: 10px;}
 </footer>
 
 <script>
+const password = "harle";
+
+function checkPassword() {
+  const entered = document.getElementById("pw-input").value;
+  if (entered === password) {
+    document.getElementById("password-gate").style.display = "none";
+    document.body.style.overflow = "auto";
+  } else {
+    document.getElementById("error-msg").textContent = "Wrong password";
+  }
+}
+
+// Show the gate immediately
+document.getElementById("password-gate").style.display = "flex";
+document.body.style.overflow = "hidden";
 'use strict';
 document.documentElement.lang = navigator.language || navigator.userLanguage || 'en';
 
