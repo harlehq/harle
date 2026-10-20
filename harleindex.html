@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Maison Harle</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+/*This is the Navigation Bar section*/
+.navbar 
+{margin-top: 10px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+background-color: #fff;
+border: 2px solid #000;
+padding: 15px 20px;
+color: #000;
+font-family: Arial, sans-serif;
+position: relative;
+z-index: 1001;}
+
+.nav-links 
+{display: flex;
+gap: 14px;
+list-style: none;
+margin: 0;
+padding: 0;}
+
+.nav-links a 
+{color: #000;
+text-decoration: none;
+font-size: 20px;
+text-transform: uppercase;}
+
+.nav-links a:hover 
+{color: #666;}
+
+.logo-container 
+{color: black;
+font-weight: bold;
+flex-shrink: 0;
+position: absolute;
+left: 50%;
+transform: translateX(-50%);}
+
+.logo-link 
+{color: #000;
+font-size: 36px;
+font-weight: bold;
+text-decoration: none;
+font-style: italic;}
+
+.logo-link:hover 
+{color: #666;}
+
+.right-icons 
+{display: flex;
+gap: 15px;
+color: #000;
+text-align: center;
+align-items: center;
+justify-content: flex-end;}
+
+.right-icons a:hover 
+{color: #666;}
+
+.right-icons a 
+{display: flex;
+align-items: center;
+justify-content: center;
+height: 24px;
+width: 24px;
+text-decoration: none;}
+
+.star-icon
+{margin-left: 5px;}
+
+.star-icon.filled
+{color: black;}
+
+.shopping_bag-icon
+{cursor: pointer;
+position: relative;}
+
+.shopping_bag-icon svg
+{width: 24px;
+height: 24px;}
+
+.search-icon, .star-icon, .shopping_bag-icon, .login
+{font-size: 24px;
+color: #000;
+text-decoration: none;}
+
+.search-icon:hover, .star-icon:hover, .shopping_bag-icon:hover, .login
+{color: #666;}
+
+.login
+{margin-left: 20px;
+margin-right: 20px;
+cursor: pointer;
+font-size: 20px;
+font-family: Arial, sans-serif;
+color: black;
+text-transform: uppercase;} 
+
+.search-wrapper 
+{position: relative;
+width: 300px;
+height: 40px;
+display: flex;
+align-items: center;
+background: white;
+border-radius: 0;
+border: 1px solid #ccc;
+overflow: hidden;}
+
+.search-input 
+{width: 100%;
+padding: 0 10px 0 40px;
+border: none;
+outline: none;
+font-size: 16px;
+background: transparent;}
+
+.search-icon 
+{position: absolute;
+left: 10px;
+top: 50%;
+transform: translateY(-50%);
+width: 24px;
+height: 24px;
+pointer-events: none;}
+
+.search-icon svg 
+{fill: #666;}
+
+.suggestions
+{position: absolute;
+top: 100%;
+left: 0;
+background: white;
+border: 1px solid #ccc;
+width: 100%;
+max-height: 200px;
+overflow-y: auto;
+z-index: 1000;
+display: none;}
+
+.suggestions ul
+{list-style: none;
+padding: 0;
+margin: 0;}
+
+.suggestions li
+{padding: 10px;
+cursor: pointer;}
+
+.suggestions li:hover
+{background: #f0f0f0;}
+
+.wrapper 
+{flex: 1;
+display: flex;
+flex-direction: row;
+position: relative;
+height: 100%;}
+
+.login-form 
+{display: flex;
+flex-direction: column;
+gap: 10px;
+padding: 10px 0;
+position: relative;}
+
+.inputs-row 
+{display: flex;
+flex-direction: column;
+gap: 10px;
+width: 100%;}
+
+.input-group 
+{position: relative;
+display: flex;
+flex-direction: column;
+text-align: right;}
+
+.input-group label 
+{position: absolute;
+top: 50%;
+right: 10px;
+transform: translateY(-50%);
+font-size: 14px;
+color: #000;
+margin-bottom: 0px;
+font-weight: bold;
+pointer-events: none;
+transition: 0.3s ease;}
+
+.input-group input:focus + label,
+.input-group input:not(:placeholder-shown) + label {
+top: -8px;
+right: 8px;
+font-size: 12px;
+color: #000;
+background: white;
+padding: 0 4px;
+}
+.input-group input {
+padding: 12px 10px 12px 10px;
+border: 1px solid #ccc;
+border-radius: 0;
+font-size: 16px;
+text-align: right;
+width: 100%;
+box-sizing: border-box;
+background: transparent;
+}
+.input-group input:focus {
+outline: none;
+border-color: #000;
+}
+.login-button {
+padding: 10px;
+background-color: #000;
+color: #fff;
+border: none;
+cursor: pointer;
+font-size: 16px;
+margin-top: 10px;
+text-align: right;
+width: 100%;
+}
+
+.login-button:hover {
+background-color: #333;
+}
+
+@media (max-width: 768px) {
+.inputs-row {
+flex-direction: column;
+gap: 10px;
+}
+.input-group {
+text-align: left;
+}
+.input-group label {
+right: auto;
+left: 10px;
+}
+.input-group input {
+text-align: left;
+}
+.input-group input:focus + label,
+.input-group input:not(:placeholder-shown) + label {
+left: 8px;
+right: auto;
+}
+}
+
+.image-container-1 
+{margin-top: 10px;
+margin-left: 0px;
+margin-right: 0px;
+margin-bottom: 100px;
+height: 4400px;
+width: 3009px; 
+box-sizing: border-box;
+display: grid;
+position: relative;
+z-index: 1;
+overflow: visible;}
+
+.image-1
+{width: 100%;
+height: 36.7%;
+object-fit: cover;
+display: block;
+z-index: 2;
+border: 2px solid black;}
+
+.windows-image-container 
+{border: 2px solid white;
+background-color: white;
+position: absolute;
+overflow: hidden;
+font-family: Arial, sans-serif;
+box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+margin-top: 1900px;
+z-index: 3;}
+
+.windows-image-container-1 
+{width: 700px;
+height: 800px;
+top: 150px;
+left: calc(50% - 1000px);}
+
+.windows-image-container-2 
+{width: 700px;
+height: 800px;
+top: 150px;
+right: calc(50% - 1000px);}
+
+.title-bar 
+{background: linear-gradient(to right, #000080, #1084d0);
+color: white;
+padding: 2px 2px 2px 5px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+user-select: none;}
+
+.title 
+{font-weight: bold;
+font-size: 12px;}
+
+.buttons
+{display: flex;}
+
+.btn 
+{width: 16px;
+height: 14px;
+background-color: #c0c0c0;
+border-top: 1px solid #ffffff;
+border-left: 1px solid #ffffff;
+border-bottom: 1px solid #808080;
+border-right: 1px solid #808080;
+margin: 0;
+display: flex;
+justify-content: center;
+align-items: center;
+cursor: pointer;
+position: relative;
+font-size: 0;}
+
+.btn:active 
+{border-top: 1px solid #808080;
+border-left: 1px solid #808080;
+border-bottom: 1px solid #ffffff;
+border-right: 1px solid #ffffff;
+background-color: #c0c0c0;}
+
+.minimize-btn::before 
+{content: '';
+position: absolute;
+bottom: 1px;
+left: 50%;
+transform: translateX(-50%);
+width: 8px;
+height: 2px;
+background-color: #000;}
+
+.maximize-btn::before 
+{content: '';
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+width: 8px;
+height: 8px;
+border: 1px solid #000;
+border-top: 2px solid #000;}
+
+.close-btn::before,
+.close-btn::after 
+{content: '';
+position: absolute;
+top: 50%;
+left: 50%;
+width: 10px;
+height: 2px;
+background-color: #000;}
+
+.close-btn::before 
+{transform: translate(-50%, -50%) rotate(45deg);}
+
+.close-btn::after
+{transform: translate(-50%, -50%) rotate(-45deg);}
+
+.windows-image-content 
+{padding: 10px;  
+text-align: center;
+color: black;
+height: calc(100% - 25px);
+display: flex;
+flex-direction: column;
+justify-content: center;}
+
+.windows-image-content img 
+{max-width: 100%;
+height: auto;
+margin-bottom: 5px;}
+
+.minimized .windows-image-content 
+{display: none;}
+
+.minimized 
+{height: auto !important;}
+
+.enlarged 
+{width: 900px !important;
+height: 1000px !important;
+z-index: 1000;}
+
+.enlarged .windows-image-content 
+{height: calc(100% - 25px);
+padding: 10px;
+justify-content: center;
+overflow: auto;}
+
+.enlarged .windows-image-content img 
+{max-width: 100%;
+max-height: 80%;}
+
+body
+{position: relative;
+padding-bottom: 0px;}
+
+.nav-item 
+{position: relative;}
+
+.nav-link 
+{cursor: pointer;}
+
+.dropdown 
+{display: none;
+position: absolute;
+top: 100%;
+left: -24%;
+width: 300px;
+background-color: #fff;
+color: #000;
+border: 1px solid #ccc;
+box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+z-index: 1000;
+border-radius: 10px;
+padding: 20px;
+margin-top: 0;}
+
+.nav-item:hover > .dropdown {
+display: block;
+}
+.dropdown::before {
+content: '';
+position: absolute;
+top: -10px;
+left: 50%;
+transform: translateX(-50%);
+border-left: 10px solid transparent;
+border-right: 10px solid transparent;
+border-bottom: 10px solid #fff;
+}
+.dropdown-content {
+display: flex;
+flex-direction: column;
+}
+.category-list, .sub-list {
+list-style: none;
+padding: 0;
+margin-bottom: 20px;
+}
+.category-list li, .sub-list li {
+margin-bottom: 10px;
+}
+.category-list a, .sub-list a {
+color: #000;
+text-decoration: none;
+display: block;
+}
+.product-images {
+display: flex;
+flex-direction: column;
+gap: 10px;
+}
+.product-images img {
+width: 100%;
+height: auto;
+}
+@media (max-width: 768px) {
+.nav-links {
+flex-direction: column;
+}
+.dropdown {
+position: static;
+width: 100%;
+left: 0;
+}
+.dropdown::before {
+display: none;
+}
+}
+
+.product 
+{border: 1px solid #ccc;
+padding: 10px;
+margin: 10px;
+display: inline-block;}
+
+.image-container-2 
+{margin-top: 40px;
+margin-left: 0px;
+margin-right: 0px;
+margin-bottom: 40px;
+box-sizing: border-box;
+display: grid;
+position: relative;
+z-index: 1;
+overflow: visible;}
+
+.image-2
+{width: 100%;
+height: 100%;
+object-fit: cover;
+display: block;
+z-index: 2;}
+
+/* ==================== STICKY NOTE STYLES ==================== */
+.sticky-note {
+position: relative;
+top: auto;
+margin-top: 20px;
+margin-bottom: 20px;
+left: 50%;
+transform: translateX(-211%);
+width: 700px;
+max-width: 92vw;
+height: 600px;
+background: #fff59d;
+border: 2px solid white;
+box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+z-index: 9999;
+overflow: hidden;
+font-family: Arial, sans-serif;
+transition: width 0.25s ease, height 0.25s ease, transform 0.25s ease;
+}
+
+.stickynote-content {
+padding: 10px;
+height: calc(100% - 25px);
+background: #fff59d;
+display: flex;
+flex-direction: column;
+}
+
+.stickynote-content textarea {
+width: 100%;
+height: 100%;
+background: transparent;
+border: none;
+outline: none;
+font-size: 15.5px;
+line-height: 1.5;
+resize: none;
+font-family: Arial, sans-serif;
+color: black;
+}
+
+.minimized .stickynote-content { display: none; }
+.minimized { height: 25px !important; overflow: hidden; }
+
+.enlarged {
+width: 820px !important;
+height: 720px !important;
+z-index: 10000;
+transform: translateX(-165%) !important;
+}
+
+@media screen and (max-width: 1024px) {
+.sticky-note {
+width: 460px;
+height: 380px;
+}
+}
+@media screen and (max-width: 1500px) {
+.sticky-note {
+top: 300px !important;
+margin-top: 20px !important;
+margin-bottom: 20px;
+left: 50% !important;
+transform: translateX(-80%) !important;
+width: 60vw;
+height: 280px;
+}
+.sticky-note.enlarged {
+width: 75vw !important;
+height: 350px !important;
+transform: translateX(-55%) !important;
+}
+}
+@media screen and (max-width: 480px) {
+.sticky-note {
+top: 70px !important;
+height: 280px;
+}
+.stickynote-content textarea {
+font-size: 14.5px;
+}
+}
+
+footer 
+{position: static;
+bottom: 0;
+width: 100%;}
+
+.copyright_text
+{font-size: 20px;
+font-family: Arial, sans-serif;
+cursor: pointer;
+align-items: center;
+text-align: center;
+padding-bottom: 10px;}
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+<ul class="nav-links">
+<li class="nav-item">
+<a href="ag.html" class="nav-link">AG</a>
+<div class="dropdown">
+<div class="dropdown-content">
+<ul class="category-list">
+<li><a href="rings.html">Rings</a></li>
+<li><a href="beltchain.html">Belt Chain</a></li>
+</ul>
+</div>
+</div>
+</li>
+</ul>
+
+<div class="logo-container">
+<a href="https://maisonaharle.com" class="logo-link"><b><i> MAISON HARLE</i></b></a>
+</div> 
+
+<div class="right-icons">
+<form action="/search" method="get">
+<div class="search-wrapper">
+<input type="search" class="search-input" name="q" placeholder="Search for a product..." />
+<div class="search-icon">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+<path d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+<path d="M0 0h24v24H0V0z" fill="none"/>
+</svg>
+</div>
+<div class="suggestions">
+<ul></ul>
+</div>
+</div>
+</form>
+
+<a href="starred_page.html" class="star-icon"> ☆ </a>
+<a href="shopping_bag.html" class="shopping_bag-icon">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-bag" viewBox="0 0 16 16">
+<path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1z"/>
+</svg>
+<span class="shopping_bag-badge" id="shopping_bag-badge"></span>
+</a>
+</div>
+</nav>
+
+<div id="main" class="main"></div>
+<div class="image-container-1">
+<img class="image-1" src="images/image-1.jpg">
+</div>
+
+<div class="windows-image-container windows-image-container-1" id="WindowsimgContainer1">
+<div class="title-bar" id="titleBar1">
+<span class="title">"DROP 01"</span>
+<div class="buttons">
+<button class="btn minimize-btn" id="minBtn1" onclick="toggleMinimize('WindowsimgContainer1')"></button>
+<button class="btn maximize-btn" id="maxBtn1" onclick="toggleEnlarge('WindowsimgContainer1', 'maxBtn1')"></button>
+<button class="btn close-btn" id="closeBtn1" onclick="closeWindow('WindowsimgContainer1')"></button>
+</div>
+</div>
+<div class="windows-image-content">
+<img src="" />
+</div>
+</div>
+
+<div class="windows-image-container windows-image-container-2" id="WindowsimgContainer2">
+<div class="title-bar" id="titleBar2">
+<span class="title">"DROP 01"</span>
+<div class="buttons">
+<button class="btn minimize-btn" id="minBtn2" onclick="toggleMinimize('WindowsimgContainer2')"></button>
+<button class="btn maximize-btn" id="maxBtn2" onclick="toggleEnlarge('WindowsimgContainer2', 'maxBtn2')"></button>
+<button class="btn close-btn" id="closeBtn2" onclick="closeWindow('WindowsimgContainer2')"></button>
+</div>
+</div>
+<div class="windows-image-content">
+<img src=""/>
+</div>
+</div>
+
+<!-- =============== STICKY NOTE (underneath the windows containers) =============== -->
+<div class="sticky-note windows-image-container" id="stickyWindow">
+    <div class="title-bar" id="titleBar">
+        <span class="title">Sticky Note</span>
+        <div class="buttons">
+            <button class="btn minimize-btn" id="minBtn"></button>
+            <button class="btn maximize-btn" id="maxBtn"></button>
+            <button class="btn close-btn" id="closeBtn"></button>
+        </div>
+    </div>
+    <div class="stickynote-content windows-image-content" id="contentArea">
+        <textarea id="noteText">Sorry, I'm busy right now, but I'll see ya soon!
+-HQ</textarea>
+    </div>
+</div>
+
+<div class="image-container-2">
+<img class="image-2" src="">
+</div>
+
+<footer>
+<div class="copyright_text" id="copyright_text">2026 MAISON HARLE </div>
+</footer>
+
+<script>
+'use strict';
+document.documentElement.lang = navigator.language || navigator.userLanguage || 'en';
+
+const containerStates = {
+WindowsimgContainer1: { isMinimized: false, isEnlarged: false, originalWidth: '', originalHeight: '' },
+WindowsimgContainer2: { isMinimized: false, isEnlarged: false, originalWidth: '', originalHeight: '' }
+};
+
+function toggleMinimize(containerId) {
+const container = document.getElementById(containerId);
+const state = containerStates[containerId];
+if (state.isMinimized) {
+container.classList.remove('minimized');
+state.isMinimized = false;
+} else {
+container.classList.add('minimized');
+state.isMinimized = true;
+}
+}
+
+function toggleEnlarge(containerId, maxBtnId) {
+const container = document.getElementById(containerId);
+const maxBtn = document.getElementById(maxBtnId);
+const state = containerStates[containerId];
+if (state.isEnlarged) {
+container.style.width = state.originalWidth;
+container.style.height = state.originalHeight;
+container.classList.remove('enlarged');
+maxBtn.innerText = '□';
+state.isEnlarged = false;
+} else {
+state.originalWidth = container.style.width || getComputedStyle(container).width;
+state.originalHeight = container.style.height || getComputedStyle(container).height;
+container.classList.add('enlarged');
+maxBtn.innerText = '🗗';
+state.isEnlarged = true;
+}
+}
+
+function closeWindow(containerId) {
+document.getElementById(containerId).style.display = 'none';
+}
+
+const searchInput = document.querySelector('.search-input');
+const suggestions = document.querySelector('.suggestions ul');
+const searchForm = document.querySelector('.right-icons form');
+const searchwrapper = document.querySelector('.search-wrapper');
+const products = [
+'ring',
+'rings',
+'01 arle ring',
+'arle ring',
+'arle',
+'01',
+];
+
+searchInput.addEventListener('input', () => {
+const value = searchInput.value.trim().toLowerCase();
+suggestions.innerHTML = '';
+if (value) {
+const filtered = products.filter(product => product.toLowerCase().includes(value));
+filtered.forEach(product => {
+const li = document.createElement('li');
+li.textContent = product;
+li.addEventListener('click', () => {
+searchInput.value = product;
+suggestions.parentElement.style.display = 'none';
+searchForm.submit();
+});
+suggestions.appendChild(li);
+});
+suggestions.parentElement.style.display = filtered.length ? 'block' : 'none';
+} else {
+suggestions.parentElement.style.display = 'none';
+}
+});
+
+const searchWrapper = document.querySelector('.search-wrapper');
+document.addEventListener('click', (event) => {
+if (!searchWrapper.contains(event.target)) {
+suggestions.parentElement.style.display = 'none';
+}
+});
+
+function updateShoppingBagIcon() {
+const cart = JSON.parse(localStorage.getItem('shoppingBagItems')) || [];
+const bagIcon = document.querySelector('.shopping_bag-icon');
+const badge = document.getElementById('shopping_bag-badge');
+if (bagIcon) {
+if (cart.length > 0) {
+bagIcon.classList.add('filled');
+} else {
+bagIcon.classList.remove('filled');
+}
+}
+if (badge) {
+badge.textContent = cart.length;
+badge.style.display = cart.length > 0 ? 'block' : 'none';
+}
+}
+
+function toggleMenu() {
+var sidebar = document.getElementById("mySidebar");
+var main = document.getElementById("main");
+var currentWidth = parseFloat(getComputedStyle(sidebar).width);
+if (currentWidth > 0) {
+closeMenu();
+} else {
+openMenu();
+}
+}
+
+function openMenu() {
+document.getElementById("mySidebar").style.width = "11%";
+document.getElementById("mySidebar").style.border = "1px solid black";
+document.getElementById("main").style.marginLeft = "250px";
+}
+function closeMenu() {
+document.getElementById("mySidebar").style.width = "0";
+document.getElementById("mySidebar").style.border = "none";
+document.getElementById("main").style.marginLeft = "0";
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+const sections = [
+{ heading: 'company-heading', content: 'company-content' },
+{ heading: 'boutiques-heading', content: 'boutiques-content' },
+{ heading: 'connect-heading', content: 'connect-content' },
+{ heading: 'services-heading', content: 'services-content' },
+{ heading: 'shop-heading', content: 'shop-content' },
+{ heading: 'account-heading', content: 'account-content' }
+];
+
+sections.forEach(section => {
+const heading = document.getElementById(section.heading);
+const content = document.getElementById(section.content);
+const icon = heading.querySelector('.toggle-icon');
+
+if (heading && content && icon) {
+heading.addEventListener('click', function() {
+const isVisible = content.style.display === 'block';
+if (isVisible) {
+content.style.display = 'none';
+icon.textContent = '+';
+icon.classList.remove('rotated');
+} else {
+content.style.display = 'block';
+icon.textContent = '✝';
+icon.classList.add('rotated');
+}
+});
+}
+});
+});
+
+window.addEventListener('load', function() {
+if (localStorage.getItem('loggedIn') === 'true') {
+const username = localStorage.getItem('username');
+} else {
+}
+});
+
+// Sticky Note Script
+document.addEventListener('DOMContentLoaded', function() {
+    const stickyWindow = document.getElementById('stickyWindow');
+    const titleBar = document.getElementById('titleBar');
+    const minBtn = document.getElementById('minBtn');
+    const maxBtn = document.getElementById('maxBtn');
+    const closeBtn = document.getElementById('closeBtn');
+
+    let isMinimized = false;
+    let isEnlarged = false;
+    let originalStyles = {};
+
+    function saveOriginalStyles() {
+        originalStyles = {
+            width: stickyWindow.style.width || getComputedStyle(stickyWindow).width,
+            height: stickyWindow.style.height || getComputedStyle(stickyWindow).height,
+            transform: stickyWindow.style.transform
+        };
+    }
+
+    let isDragging = false;
+    let offsetX, offsetY;
+
+    function startDrag(e) {
+        if (e.target.tagName === 'BUTTON') return;
+        isDragging = true;
+        const rect = stickyWindow.getBoundingClientRect();
+        const clientX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+        const clientY = e.type.includes('touch') ? e.touches[0].clientY : e.clientY;
+        offsetX = clientX - rect.left;
+        offsetY = clientY - rect.top;
+        stickyWindow.style.transform = 'none';
+    }
+
+    function drag(e) {
+        if (!isDragging) return;
+        const clientX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+        const clientY = e.type.includes('touch') ? e.touches[0].clientY : e.clientY;
+        stickyWindow.style.left = (clientX - offsetX) + 'px';
+        stickyWindow.style.top = (clientY - offsetY) + 'px';
+    }
+
+    titleBar.addEventListener('mousedown', startDrag);
+    document.addEventListener('mousemove', drag);
+    document.addEventListener('mouseup', () => isDragging = false);
+
+    titleBar.addEventListener('touchstart', startDrag, { passive: true });
+    document.addEventListener('touchmove', drag, { passive: true });
+    document.addEventListener('touchend', () => isDragging = false);
+
+    minBtn.addEventListener('click', () => {
+        if (isMinimized) {
+            stickyWindow.classList.remove('minimized');
+            isMinimized = false;
+        } else {
+            stickyWindow.classList.add('minimized');
+            isMinimized = true;
+        }
+    });
+
+    maxBtn.addEventListener('click', () => {
+        if (isEnlarged) {
+            stickyWindow.style.width = originalStyles.width;
+            stickyWindow.style.height = originalStyles.height;
+            stickyWindow.style.transform = originalStyles.transform;
+            stickyWindow.classList.remove('enlarged');
+            isEnlarged = false;
+        } else {
+            saveOriginalStyles();
+            stickyWindow.classList.add('enlarged');
+            isEnlarged = true;
+        }
+    });
+
+    closeBtn.addEventListener('click', () => {
+        stickyWindow.style.display = 'none';
+    });
+
+    saveOriginalStyles();
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>"AG"</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!--this is css-->
+<style>
+
+ /* General */  
+.navbar
+{display: flex;
+justify-content: space-between;
+align-items: center;
+background-color: #fff;
+border: 2px solid #000;
+padding: 15px 20px;
+color: #000;
+font-family: Arial, sans-serif;
+position: relative;
+z-index: 10;}
+
+.nav-links
+{display: flex;
+gap: 14px;
+list-style: none; /* Added for ul */
+margin: 0;
+padding: 0;}
+
+.nav-links a
+    {color: #000;
+text-decoration: none;
+font-size: 20px;
+text-transform: uppercase;}
+
+.nav-links a:hover
+    {color: #666;}
+
+
+/* Logo container */
+.logo-container
+{/*font-size: 34px; does not work here, bt only in the logo link, so this can be deleted*/
+color: black;
+font-weight: bold;
+flex-shrink: 0; /* prevents logo from shrinking */
+position: absolute;
+left: 50%;
+transform: translateX(-50%); /* Add this line to center properly */}
+
+.logo-link
+{color: #000;
+font-size: 36px;
+font-weight: bold;
+text-decoration: none;
+font-style: italic;}
+
+.logo-link:hover
+{color: #666;}
+
+
+
+/* Right icons container */
+.right-icons
+{display: flex;
+gap: 15px;
+color: #000;
+text-align: center;
+align-items: center;
+justify-content: flex-end;}
+
+.right-icons a:hover
+{color: #666;}
+
+.right-icons a 
+{display: flex;
+align-items: center;
+justify-content: center;
+height: 24px; /* Matches your icon sizes */
+width: 24px; /* Optional: Ensures consistent width, but helps if icons vary */
+text-decoration: none;} /* Already have this elsewhere, but reinforce */
+
+.search-icon, .star-icon, .shopping_bag-icon
+{font-size: 24px;
+color: #000;
+text-decoration: none;}
+
+.search-icon:hover, .star-icon:hover, .shopping_bag-icon:hover
+    {color: #666;}
+
+.search-wrapper
+{position: relative;
+width: 300px; /* Fixed width, or adjust as needed */
+height: 40px;
+display: flex;
+align-items: center;
+background: white;
+border-radius: 0; /* Rectangular, no rounded corners */
+border: 1px solid #ccc;
+overflow: hidden;}
+
+.search-input
+{width: 100%;
+padding: 0 10px 0 40px; /* Space for icon on left */
+border: none;
+outline: none;
+font-size: 16px;
+background: transparent;}
+
+.search-icon
+        {position: absolute;
+left: 10px;
+top: 50%;
+transform: translateY(-50%);
+width: 24px;
+height: 24px;
+pointer-events: none; /* So it doesn't interfere with input */}
+.search-icon svg
+        {fill: #666;}
+.suggestions
+                {position: absolute;
+top: 100%;
+left: 0;
+background: white;
+border: 1px solid #ccc;
+width: 100%;
+max-height: 200px;
+overflow-y: auto;
+z-index: 1000;
+display: none;}
+.suggestions ul /* ul: defines the type of list (unordered)*/
+                {list-style: none;
+padding: 0;
+margin: 0;}
+.suggestions li /* li: defines the indivual items within that list*/
+                {padding: 10px;
+cursor: pointer;}
+.suggestions li:hover
+                {background: #f0f0f0;}
+/*these are the right icons*/
+.star-icon
+{cursor: pointer;
+font-size: 24px;
+color: black; /* Default color for unfilled star */
+text-decoration: none; /* Remove underline if using <a> */}
+.star-icon.filled
+      {color: black; /* filled in shade for filled star */}
+.shopping_bag-icon
+      {cursor: pointer;
+position: relative;}
+.category-banner
+{margin-top: 10px;
+margin-left: 0px;
+margin-right: 0px;
+margin-bottom: 100px;
+height: 1000px; /* these dimensions are too big, you need to play around and make it smaller*/
+width: 3009px;
+box-sizing: border-box;
+border-width: 2px;
+border-style: solid;
+border-color: black;
+display: grid;
+position: relative; /* Added to establish a stacking context */
+z-index: 1;/* Ensure it's below the iframe */
+overflow: visible;}
+.image-2 /*rename so it's not as confusing?*/
+        {width: 100%;/* ensures iframe isn't clipped?!*/
+height: 997px;
+object-fit: cover;
+display: block;
+z-index: 2;}
+body
+{position: relative;
+padding-bottom: 2000px; /* Adjust this value as needed—e.g., 500px for moderate extra extra scroll, or 2000px to go way down. Use vh units like 100vh for screen-height-based padding if preferred. */}
+/* Dropdown CSS Integration */
+.nav-item
+{position: relative; /* For absolute positioning of dropdown */}
+.nav-link
+    {cursor: pointer; /* Added to match dropdown behavior */}
+.dropdown
+{display: none; /* Hidden by default */
+position: absolute;
+top: 100%;
+left: -50%; /* Adjust to center under link; tweak based on width */
+width: 300px; /* Narrower width for vertical column feel */
+background-color: #fff;
+color: #000;
+border: 1px solid #ccc;
+box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+z-index: 1000;
+border-radius: 10px; /* Rounded corners for bubble effect */
+padding: 20px;
+margin-top: 0; /* Changed to 0 to remove gap for seamless hover */}
+/* Show on hover */
+.nav-item:hover > .dropdown
+{display: block;}
+.dropdown::before {
+content: '';
+position: absolute;
+top: -10px; /* Arrow height */
+left: 50%; /* Center the arrow */
+transform: translateX(-50%); /* Precise centering */
+border-left: 10px solid transparent;
+border-right: 10px solid transparent;
+border-bottom: 10px solid #fff; /* Arrow pointing up, matching background */
+        }
+.dropdown-content {
+display: flex;
+flex-direction: column; /* Stack everything vertically */
+        }
+.category-list, .sub-list {
+list-style: none;
+padding: 0;
+margin-bottom: 20px; /* Space between sections */
+        }
+.category-list li, .sub-list li {
+margin-bottom: 10px;
+        }
+.category-list a, .sub-list a {
+color: #000;
+text-decoration: none;
+display: block; /* Make sub-links stack vertically */
+        }
+.product-images {
+display: flex;
+flex-direction: column; /* Stack images vertically */
+gap: 10px;
+        }
+.product-images img {
+width: 100%;
+height: auto;
+        }
+/* Responsive: Stack on mobile */
+@media (max-width: 768px) {
+.nav-links {
+flex-direction: column;
+            }
+.dropdown {
+position: static;
+width: 100%;
+left: 0;
+            }
+.dropdown::before
+{display: none; /* Hide arrow on mobile if needed */
+            }
+        }
+.product
+        {border: 1px solid #ccc;
+padding: 10px;
+margin: 10px;
+display: inline-block;}
+
+
+
+
+
+/*this is the shopping grid*/
+.shopping-grid
+{margin: 0%; /*remove top margin to fit edge-to-edge*/
+width: 100%; /*full width of the page*/
+border: none; /*2px solid black*/
+display: grid;
+grid-template-columns: repeat(4, 1fr); /*this is four equal columns */
+grid-gap: 0px; /* space between items*/
+padding: 0px;
+box-sizing: border-box; /* include padding and border in height/width */
+overflow: visible; /* allows scrolling if content extends height */
+grid-auto-rows: 1110px;}
+/*what is the product card for is it for the shopping-grid?*/
+.product-card
+{background-color: white;
+border: 2px solid black;
+border-radius: 5px;
+color: black; /* text color for white backgrounds */
+font-size: 16px; /* text size*/
+display: flex;
+align-items: flex-start; /* this aligns text to the top*/
+justify-content: flex-start; /* this aligns text to the left*/
+padding: 10px; /* padding for the text */
+position: relative;}
+.product-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    height: 100%;
+    width: 100%;
+}
+
+
+.product-content
+ {flex-grow: 1; /* *ADDED*: take up available space */
+width: 100%; /* *ADDED*: ensure full width */}
+.product-icons
+    {display: flex;
+gap: 15px;
+position: absolute;
+top: 10px;
+right: 10px; /* *ADDED*: position icons in top-right corner */
+align-items: center;
+    z-index: 20; /* Keeps icons above the link */}
+
+
+.product-icons a
+    {display: flex;
+align-items: center;
+justify-content: center;
+height: 24px;
+font-size: 24px;
+color: #000;
+text-decoration: none;}
+
+.product-icons a:hover
+    {color: #666; /* *ADDED*: hover effect consistent with other icons */}
+
+
+
+
+/* CSS for star icon styling (individual products) */
+.star-icon
+{cursor: pointer;
+font-size: 24px;
+color: black; /* Default color for unfilled star */
+text-decoration: none; /* Remove underline if using <a> */}
+.star-icon.filled {
+color: black; /* Darker shade for filled star */}
+.shopping_bag-icon
+{cursor: pointer;
+font-size: 24px;
+color: black; /* Default color for unfilled star */
+text-decoration: none; /* Remove underline if using <a> */}
+.shopping_bag.filled
+    {color: black; /* Darker shade for filled star */}
+.shopping_bag-badge
+{position: absolute;
+top: -5px;
+right: -5px;
+background-color: black;
+color: white;
+border-radius: 50%;
+padding: 2px 6px;
+font-size: 12px;
+display: none;} /* Hidden by default */
+.product-info
+    {text-align: center; /* Centers the name and price */
+margin-top: 10px;} /* Optional: Add some space above the info if needed */
+
+/* Shopping Bag Sidebar Styles */
+.shopping_bag-sidebar {
+    position: fixed;
+    top: 97px;
+    right: -800px; /* Hidden by default */
+    width: 800px;
+    height: 56vh;
+    background-color: #fff;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+    transition: right 0.3s ease;
+    z-index: 1001;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.shopping_bag-sidebar.open {
+    right: 0;
+}
+
+/* Header */
+.shopping_bag-header {
+    background-color: #28a745; /* Green like in Balenciaga image */
+    color: #fff;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.shopping_bag-header h2 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* Shopping Bag Items Section - Scrollable */
+.shopping_bag-items {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px;
+}
+
+.shopping_bag-item {
+    display: flex;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+}
+
+.shopping_bag-item-image {
+    width: 80px;
+    height: 80px;
+    background-color: #ddd;
+    margin-right: 15px;
+    flex-shrink: 0;
+    object-fit: cover;
+}
+
+.shopping_bag-item-details {
+    flex: 1;
+}
+
+.shopping_bag-item-name {
+    font-weight: bold;
+    margin: 0 0 5px 0;
+}
+
+.shopping_bag-item-price {
+    color: #000;
+    font-size: 18px;
+    margin: 0 0 5px 0;
+}
+
+.quantity-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 10px 0;
+}
+
+.quantity-btn {
+    width: 25px;
+    height: 25px;
+    border: 1px solid #ddd;
+    background: #fff;
+    cursor: pointer;
+}
+
+.quantity {
+    font-weight: bold;
+}
+
+.actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.action-btn {
+    background: none;
+    border: none;
+    color: #007bff;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+/* Summary Section */
+.shopping_bag-summary {
+    padding: 15px;
+    border-top: 1px solid #eee;
+    flex-shrink: 0;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+.summary-total {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+/* Buttons */
+.shopping_bag-buttons {
+    display: flex;
+    gap: 10px;
+    padding: 15px;
+    border-top: 1px solid #eee;
+    flex-shrink: 0;
+}
+
+.btn {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.checkout-btn {
+    background-color: #000;
+    color: #fff;
+}
+
+.view-shopping_bag-btn {
+    background-color: #fff;
+    color: #000;
+    border: 1px solid #000;
+}
+
+/* Overlay for backdrop */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    display: none;
+}
+
+.overlay.open {
+    display: block;
+}
+
+/*this is the link for image to product info page*/
+.product-link {
+  text-decoration: none; /* No underline */
+  color: inherit; /* Keep text colors as-is */
+  display: block; /* Makes the link fill the content area */
+}
+
+.product-link:hover {
+  opacity: 0.8; /* Subtle hover effect on the whole content */
+}
+
+.product-icons a {
+  pointer-events: auto; /* Ensures icons are always clickable independently */
+  z-index: 10; /* Layers icons above the link if needed */
+}
+</style>
+<!--this is html-->
+</head>
+<body>
+
+    
+<!--this is the LEATHER category list-->
+<nav class="navbar">
+<ul class="nav-links"> <!-- Changed to ul for list structure -->
+<li class="nav-item">
+<a href="ag.html" class="nav-link">AG</a>
+<div class="dropdown">
+<div class="dropdown-content">
+<!-- Categories (stacked vertically) -->
+<ul class="category-list">
+<li><a href="rings.html">Rings</a></li>
+</div>
+</li>
+</ul>
+
+</ul>
+</div>
+</div>
+</li>
+
+</ul>
+
+
+
+<div class="logo-container ">
+<a href= "https://francescaloren.com" class= "logo-link"> <b><i> "FRANCESCA LOREN" </i></b></a>
+</div>
+<!-- nav bar right icons-->
+<div class="right-icons">
+<form action="/search" method="get">
+<div class="search-wrapper">
+<input type="search" class="search-input" name="q" placeholder="Search for a product..." />
+<div class="search-icon">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+<path d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+<path d="M0 0h24v24H0V0z" fill="none"/>
+</svg>
+</div>
+<div class="suggestions">
+<ul></ul>
+</div>
+</div>
+</form>
+<a href="starred_page.html" class="star-icon"> ☆ </a> <!-- star icon; when you end up starring an item the star shluld get filled in ★ -->
+<a href="#" class="shopping_bag-icon" onclick="openShoppingBag()">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-bag" viewBox="0 0 16 16">
+<path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1z"/>
+</svg>
+<span class="shopping_bag-badge" id="shopping_bag-badge"></span>
+</a>
+</div>
+</nav>
+<div class="category-banner">
+<img class="image-2" src="images/image-2.jpg">
+</div>
+
+
+
+
+
+<!--shopping grid-->
+<!--box one-->
+<div class="shopping-grid">
+<div class="product-card" data-product-id="01 jeans">
+
+    <!-- Whole card is clickable -->
+<a href= "rings01infopage.html" class="product-link">
+<div class="product-content">
+<img src="images/placeholder.jpg"  style="width: 89%; height: auto; margin: 30px; margin-bottom: 0%;">
+</a>
+<div class="product-info">
+<p class="product-name"></p>
+<p class="product-price"></p>
+</div>
+</div>
+
+
+<!-- Icons stay independent -->
+<div class="product-icons">
+    <a href="#" class="star-icon" onclick="event.preventDefault(); toggleStar(this, '01 jeans')">☆</a>
+    <a href="#" class="shopping_bag-icon" onclick="addToShoppingBag(event, this)">
+<!-- this is old a href="#" class="star-icon">☆</a> Star icon on the right 
+<a href="#" class="shopping_bag-icon" onclick="addToShoppingBag(event, this)">-->
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-bag" viewBox="0 0 16 16">
+<path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1z"/>
+</svg>
+</a>
+</div>
+</div>
+
+
+
+</div>
+
+<!-- Overlay -->
+<div class="overlay" id="overlay" onclick="closeShoppingBag()"></div>
+
+<!-- Sidebar -->
+<div class="shopping_bag-sidebar" id="shoppingBagSidebar">
+    <div class="shopping_bag-header">
+        <h2>SHOPPING BAG</h2>
+        <button class="close-btn" onclick="closeShoppingBag()">&times;</button>
+    </div>
+
+    <div class="shopping_bag-items" id="shoppingBagItems">
+        <!-- Items will be populated dynamically -->
+    </div>
+
+    <div class="shopping_bag-summary" id="shoppingBagSummary">
+        <div class="summary-row">
+            <span>Shipping cost</span>
+            <span>$0.00</span>
+        </div>
+        <div class="summary-row">
+            <span>Sales tax</span>
+            <span>Calculated at checkout</span>
+        </div>
+        <div class="summary-row summary-total">
+            <span>Estimated total (tax excl.)</span>
+            <span id="estimatedTotal">$0.00</span>
+        </div>
+    </div>
+
+    <div class="shopping_bag-buttons">
+        <button class="btn checkout-btn" onclick="window.location.href='checkout_page.html'">CHECKOUT (<span id="shoppingBagCount">0</span>)</button>
+        <button class="btn view-shopping_bag-btn" onclick="viewFullShoppingBag()">VIEW SHOPPING BAG</button>
+    </div>
+</div>
+
+<!--this is the java script section-->
+<script>
+// Define search-related variables (fixes undefined errors)
+const searchInput = document.querySelector('.search-input');
+const suggestions = document.querySelector('.suggestions ul');
+const searchWrapper = document.querySelector('.search-wrapper');
+const searchForm = document.querySelector('form[action="/search"]');
+const products = ['Mirror Compact', 'Accessories', 'blusher', 'bronzer', 'brows', 'cheeky', 'conclear', 'contour', 'eyeliner', 'eyes', 'eyeshadow', 'face', 'foundation', 'gloss', 'hair bobs', 'highligher', 'lip liner', 'lips', 'lipstick', 'mascara', 'mirror compact', 'new arrivals', 'oil balm', 'paintsticks', ' powder', 'tools', 'vanity bag']; // Add your product list here, e.g., ['Mirror Compact', 'Lipstick'];
+// JavaScript for starring functionality using localStorage
+function toggleStar(element, productId) {
+let starred = JSON.parse(localStorage.getItem('starredProducts')) || [];
+if (starred.includes(productId)) {
+starred = starred.filter(id => id !== productId);
+element.textContent = '☆';
+element.classList.remove('filled');
+    } else {
+starred.push(productId);
+element.textContent = '★';
+element.classList.add('filled');
+    }
+localStorage.setItem('starredProducts', JSON.stringify(starred));
+const globalStar = document.querySelector('.navbar .star-icon');
+if (globalStar) globalStar.textContent = (starred.length > 0) ? '★' : '☆';
+}
+// On page load, restore starred states and update badge
+window.addEventListener('load', function() {
+let starred = JSON.parse(localStorage.getItem('starredProducts')) || [];
+document.querySelectorAll('.product-card .star-icon').forEach(function(element) {
+let productId = element.closest('.product-card').getAttribute('data-product-id');
+if (starred.includes(productId)) {
+element.textContent = '★';
+element.classList.add('filled');
+        }
+    });
+const globalStar = document.querySelector('.navbar .star-icon');
+if (globalStar) globalStar.textContent = (starred.length > 0) ? '★' : '☆';
+
+// Convert old cart format if necessary
+let shoppingBag = JSON.parse(localStorage.getItem('shoppingBagItems')) || [];
+if (shoppingBag.length > 0 && typeof shoppingBag[0] === 'string') {
+    const newShoppingBag = [];
+    shoppingBag.forEach(productId => {
+        const productCard = document.querySelector(`[data-product-id="${productId}"]`);
+        if (productCard) {
+            const name = productCard.querySelector('.product-name').textContent;
+            const priceStr = productCard.querySelector('.product-price').textContent;
+            const price = parseFloat(priceStr.replace('$', ''));
+            const image = productCard.querySelector('img').src;
+            newShoppingBag.push({id: productId, name, price, image, quantity: 1});
+        }
+    });
+    localStorage.setItem('shoppingBagItems', JSON.stringify(newShoppingBag));
+    shoppingBag = newShoppingBag;
+}
+
+updateShoppingBagBadge(); // Initialize badge on load
+populateShoppingBag(); // Populate shopping bag on load if open
+});
+if (searchInput) {
+searchInput.addEventListener('input', () => {
+const value = searchInput.value.trim().toLowerCase();
+suggestions.innerHTML = '';
+if (value) {
+const filtered = products.filter(product => product.toLowerCase().includes(value));
+filtered.forEach(product => {
+const li = document.createElement('li');
+li.textContent = product;
+li.addEventListener('click', () => {
+searchInput.value = product;
+suggestions.parentElement.style.display = 'none';
+if (searchForm) searchForm.submit();
+                });
+suggestions.appendChild(li);
+            });
+suggestions.parentElement.style.display = filtered.length ? 'block' : 'none';
+        } else {
+suggestions.parentElement.style.display = 'none';
+        }
+    });
+}
+// Hide suggestions on outside click
+document.addEventListener('click', (event) => {
+if (!searchWrapper.contains(event.target)) {
+suggestions.parentElement.style.display = 'none';
+    }
+});
+
+// Shopping Bag Functionality - Enhanced for quantities and details
+function addToShoppingBag(event, element) {
+    event.preventDefault();
+    const productCard = element.closest('.product-card');
+    const productId = productCard.getAttribute('data-product-id');
+    const name = productCard.querySelector('.product-name').textContent;
+    const priceStr = productCard.querySelector('.product-price').textContent;
+    const price = parseFloat(priceStr.replace('$', ''));
+    const image = productCard.querySelector('img').src;
+
+    let shoppingBag = JSON.parse(localStorage.getItem('shoppingBagItems')) || [];
+    const existingIndex = shoppingBag.findIndex(item => item.id === productId);
+
+    if (existingIndex === -1) {
+        // Add new item with quantity 1
+        shoppingBag.push({id: productId, name, price, image, quantity: 1});
+    } else {
+        // Increment quantity
+        shoppingBag[existingIndex].quantity += 1;
+    }
+
+    localStorage.setItem('shoppingBagItems', JSON.stringify(shoppingBag));
+    updateShoppingBagBadge();
+    openShoppingBag(); // Open sidebar on add
+}
+
+// Update badge with total items count
+function updateShoppingBagBadge() {
+    const shoppingBag = JSON.parse(localStorage.getItem('shoppingBagItems')) || [];
+    const totalItems = shoppingBag.reduce((sum, item) => sum + item.quantity, 0);
+    const badge = document.getElementById('shopping_bag-badge');
+    if (badge) {
+        badge.textContent = totalItems;
+        badge.style.display = totalItems > 0 ? 'block' : 'none';
+    }
+    document.getElementById('shoppingBagCount').textContent = totalItems;
+    updateTotals();
+}
+
+// Star click handler - improved
+document.querySelectorAll('.product-card .star-icon').forEach(function(element) {
+    element.addEventListener('click', function(event) {
+        event.preventDefault();   // Prevent link from triggering
+        const productId = element.closest('.product-card').getAttribute('data-product-id');
+        toggleStar(element, productId);
+    });
+});
+
+// Shopping Bag Sidebar Functions
+function openShoppingBag() {
+    document.getElementById('shoppingBagSidebar').classList.add('open');
+    document.getElementById('overlay').classList.add('open');
+    populateShoppingBag();
+}
+
+function closeShoppingBag() {
+    document.getElementById('shoppingBagSidebar').classList.remove('open');
+    document.getElementById('overlay').classList.remove('open');
+}
+
+function populateShoppingBag() {
+    const shoppingBagItemsEl = document.getElementById('shoppingBagItems');
+    const shoppingBag = JSON.parse(localStorage.getItem('shoppingBagItems')) || [];
+    shoppingBagItemsEl.innerHTML = '';
+
+    shoppingBag.forEach((item, index) => {
+        const shoppingBagItemEl = document.createElement('div');
+        shoppingBagItemEl.className = 'shopping_bag-item';
+        shoppingBagItemEl.innerHTML = `
+            <img src="${item.image}" alt="${item.name}" class="shopping_bag-item-image">
+            <div class="shopping_bag-item-details">
+                <h3 class="shopping_bag-item-name">${item.name}</h3>
+                <div class="shopping_bag-item-price">$${item.price.toFixed(2)}</div>
+                <div class="quantity-controls">
+                    <button class="quantity-btn" onclick="updateQuantity(${index}, -1)">-</button>
+                    <span class="quantity">${item.quantity}</span>
+                    <button class="quantity-btn" onclick="updateQuantity(${index}, 1)">+</button>
+                </div>
+                <div class="actions">
+                    <button class="action-btn">Save for later</button>
+                    <button class="action-btn">Edit</button>
+                    <button class="action-btn" onclick="deleteItem(${index})">Delete</button>
+                </div>
+            </div>
+        `;
+        shoppingBagItemsEl.appendChild(shoppingBagItemEl);
+    });
+
+    updateTotals();
+}
+
+function updateQuantity(index, delta) {
+    let shoppingBag = JSON.parse(localStorage.getItem('shoppingBagItems')) || [];
+    if (shoppingBag[index]) {
+        shoppingBag[index].quantity += delta;
+        if (shoppingBag[index].quantity <= 0) {
+            shoppingBag.splice(index, 1); // Remove if quantity reaches 0
+        }
+        localStorage.setItem('shoppingBagItems', JSON.stringify(shoppingBag));
+        updateShoppingBagBadge();
+        populateShoppingBag(); // Repopulate to reflect changes
+    }
+}
+
+function deleteItem(index) {
+    let shoppingBag = JSON.parse(localStorage.getItem('shoppingBagItems')) || [];
+    shoppingBag.splice(index, 1);
+    localStorage.setItem('shoppingBagItems', JSON.stringify(shoppingBag));
+    updateShoppingBagBadge();
+    populateShoppingBag();
+}
+
+function updateTotals() {
+    const shoppingBag = JSON.parse(localStorage.getItem('shoppingBagItems')) || [];
+    const total = shoppingBag.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    document.getElementById('estimatedTotal').textContent = `$${total.toFixed(2)}`;
+}
+
+function checkout() {
+    // Redirect to checkout page or handle
+    alert('Redirecting to checkout...');
+    // window.location.href = 'checkout.html';
+}
+
+function viewFullShoppingBag() {
+    // Redirect to full shopping bag page
+    window.location.href = 'shopping_bag.html';
+}
+</script>
+</body>
+</html>
