@@ -109,7 +109,7 @@ font-style: italic;}
 
 .right-icons 
 {display: flex;
-gap: 15px;
+gap: 12px;
 color: #000;
 text-align: center;
 align-items: center;
@@ -127,7 +127,7 @@ width: 24px;
 text-decoration: none;}
 
 .star-icon
-{margin-left: 5px;}
+
 
 .star-icon.filled
 {color: black;}
@@ -137,8 +137,8 @@ text-decoration: none;}
 position: relative;}
 
 .shopping_bag-icon svg
-{width: 24px;
-height: 24px;}
+{width: 22px;
+height: 22px;}
 
 .search-icon, .star-icon, .shopping_bag-icon, .login
 {font-size: 24px;
@@ -211,6 +211,11 @@ cursor: pointer;}
 
 .suggestions li:hover
 {background: #f0f0f0;}
+
+.login-icon.logged-in svg {
+  fill: #000;
+  stroke: none;
+}
 
 .wrapper 
 {flex: 1;
@@ -567,30 +572,139 @@ object-fit: cover;
 display: block;
 z-index: 2;}
 
-.footer 
-{position: static;
-bottom: 0;
-width: 100%;}
+.bottom-navbar {
+  margin-top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  border: none;
+  border-top: none;
+  padding: 15px 20px;
+  color: #000;
+  font-family: Arial, sans-serif;
+  position: relative;
+  z-index: 1001;
+}
 
-.copyright_text
-{font-size: 20px;
-font-family: Arial, sans-serif;
-cursor: pointer;
-align-items: center;
-text-align: center;
-padding-bottom: 10px;}
+.bottom-nav-links {
+  display: flex;
+  gap: 22px; /*14px*/
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.bottom-nav-links a {
+  color: #000;
+  text-decoration: none;
+  font-size: 22px;
+  text-transform: uppercase;
+}
+
+.bottom-nav-links a:hover {
+  color: #666;
+}
+
+.bottom-navbar .nav-item {
+  position: relative;
+}
+
+.bottom-navbar .nav-item > .dropdown.dropup {
+  display: none;
+  position: absolute;
+ bottom: calc(100% + 12px) !important;  /* forces it upward */
+  top: auto !important;      /* cancels the top: 100% from the other rule */
+  left: -10;
+  width: 254.5px;
+  background-color: #fff;
+  color: #000;
+  border: 1px solid #ccc;
+  box-shadow: 0 -4px 8px rgba(0,0,0,0.1);
+  z-index: 1000;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 0;
+}
+
+.bottom-navbar .nav-item:hover > .dropdown.dropup {
+  display: block;
+}
+
+.bottom-navbar .dropdown.dropup::before {
+  display: none !important;
+}
+
+.bottom-navbar .dropdown.dropup::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0px;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 10px solid #fff;
+  filter: drop-shadow(0 1px 0 #ccc);
+  z-index: 3;
+}
+.bottom-navbar .dropdown.dropup .category-list a,
+.bottom-navbar .dropdown.dropup .category-list li a {
+  font-size: 20px !important;
+  text-transform: none;
+  font-weight: normal;
+}
+
+.bottom-navbar .nav-item::before {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  width: 100%;
+  height: 30px;
+  background: transparent;
+  z-index: 1;
+}
+
+.bottom-navbar .dropdown-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.bottom-navbar .category-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.bottom-navbar .category-list li {
+  margin-bottom: 10px;
+}
+
+.bottom-navbar .category-list a {
+  color: #000;
+  text-decoration: none;
+  display: block;
+  font-size: 20px;
+  text-transform: none;
+}
+
+
+
+
 </style>
 </head>
 <body>
 
-<div id="password-gate" style="display:none;">
+<!--<div id="password-gate" style="display:none;">
   <div class="password-box">
     <h2>Enter Password</h2>
     <input type="password" id="pw-input" placeholder="Password">
     <button onclick="checkPassword()">Enter</button>
     <p id="error-msg"></p>
   </div>
-</div>
+</div>-->
 
 <nav class="navbar">
 <ul class="nav-links">
@@ -599,7 +713,6 @@ padding-bottom: 10px;}
 <div class="dropdown">
 <div class="dropdown-content">
 <ul class="category-list">
-<li><a href="rings.html">Rings</a></li>
 <li><a href="beltchain.html">Belt Chain</a></li>
 </ul>
 </div>
@@ -612,6 +725,7 @@ padding-bottom: 10px;}
 </div> 
 
 <div class="right-icons">
+<a href="shop_all.html" class="star-icon" title="Shop All"> ♢ </a>
 <form action="/search" method="get">
 <div class="search-wrapper">
 <input type="search" class="search-input" name="q" placeholder="Search for a product..." />
@@ -634,8 +748,19 @@ padding-bottom: 10px;}
 </svg>
 <span class="shopping_bag-badge" id="shopping_bag-badge"></span>
 </a>
+
+<a href="login.html" class="login-icon" id="loginIcon" style="display: flex; align-items: center; justify-content: center; width: 28px; height: 28px;">
+  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="3.0" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+    <circle cx="12" cy="7" r="4"/>
+  </svg>
+</a>
 </div>
 </nav>
+
+
+
+
 
 <div id="main" class="main"></div>
 <div class="image-container-1">
@@ -671,13 +796,62 @@ padding-bottom: 10px;}
 </div>
 
 
+
 <div class="image-container-2">
 <img class="image-2" src="">
 </div>
 
-<footer>
-<div class="copyright_text" id="copyright_text">2026 MAISON HARLE </div>
-</footer>
+
+
+<nav class="bottom-navbar">
+  <ul class="bottom-nav-links">
+    <li class="nav-item">
+      <a href="#" class="nav-link"> BOUTIQUE LOCATOR</a>
+      <div class="dropdown dropup">
+        <div class="dropdown-content">
+          <ul class="category-list">
+            <li><a href="rings.html">BOUTIQUE LOCATOR</a></li>
+            <li><a href="beltchain.html">BOUTIQUE APPOINTMENT</a></li>
+          </ul>
+        </div>
+      </div>
+    </li>
+
+    
+
+     <li class="nav-item">
+      <a href="#" class="nav-link">2026 MAISON HARLE</a>
+    </li>
+
+    <li class="nav-item">
+      <a href="#" class="nav-link"> CLIENT SERVICES</a>
+      <div class="dropdown dropup">
+        <div class="dropdown-content">
+          <ul class="category-list">
+            <li><a href="rings.html">TERMS </a></li>
+          <li><a href="beltchain.html">PRIVACY</a></li>
+            <li><a href="beltchain.html">RETURN POLICY</a></li>
+          <li><a href="contact.html">CONTACT</a></li>
+          </ul>
+        </div>
+      </div>
+    </li>
+    
+     <li class="nav-item">
+      <a href="#" class="nav-link"> THE COMPANY</a>
+      <div class="dropdown dropup">
+        <div class="dropdown-content">
+          <ul class="category-list">
+            <li><a href="rings.html">ABOUT </a></li>
+            <li><a href="beltchain.html">SOCIAL MEDIA</a></li>
+            <li><a href="beltchain.html">CAREERS</a></li>
+          </ul>
+        </div>
+      </div>
+    </li>
+
+  </ul>
+</nav>
 
 <script>
 const password = "harle";
@@ -856,6 +1030,18 @@ const username = localStorage.getItem('username');
 } else {
 }
 });
+
+function updateLoginIcon() {
+  const icon = document.getElementById('loginIcon');
+  if (localStorage.getItem('loggedIn') === 'true') {
+    icon.classList.add('logged-in');
+  } else {
+    icon.classList.remove('logged-in');
+  }
+}
+
+// Run on page load
+document.addEventListener('DOMContentLoaded', updateLoginIcon);
 
 </script>
 </body>
